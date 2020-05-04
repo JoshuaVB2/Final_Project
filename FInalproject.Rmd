@@ -1,0 +1,13 @@
+---
+title: "Final_project"
+author: "Josh VandenBerg"
+date: "5/4/2020"
+output: html_document
+---
+```{r}
+d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 12)
+d2017 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv", skip = 11)
+names(d2018) <- c("State","Government Function","FT Employment","FT Payroll", "PT Employment","PT Payroll","PT Hours","FT equiv Employment","March Employment","March Paryroll")
+d2018
+```
+
