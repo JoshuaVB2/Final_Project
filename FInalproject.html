@@ -184,26 +184,30 @@ summary {
 </div>
 
 
-<pre class="r"><code>d2018 &lt;- read.csv(&quot;/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv&quot;, header = FALSE)
+<pre class="r"><code>d2018 &lt;- read.csv(&quot;/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv&quot;, header = TRUE)
 d2017 &lt;- read.csv(&quot;/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv&quot;)
 d2018 &lt;- subset(d2018[-c(1:12),])
 names(d2018) &lt;- c(&quot;State&quot;,&quot;Government_Function&quot;,&quot;FT_Employment&quot;,&quot;FT_Payroll&quot;, &quot;PT_Employment&quot;,&quot;PT_Payroll&quot;,&quot;PT_Hours&quot;,&quot;FT_equiv_Employment&quot;,&quot;March_Employment&quot;,&quot;March_Payroll&quot;)
 d2018 &lt;- subset(d2018, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
 head(d2018)</code></pre>
 <pre><code>##    State                              Government_Function FT_Employment
-## 13    US      Total - All Government Employment Functions     3,801,951
-## 14    US                         Financial Administration       165,977
-## 15    US                  Other Government Administration        45,920
-## 16    US                               Judicial and Legal       172,687
-## 17    US                          Police Protection Total       104,512
-## 18    US Police Protection - Persons with Power of Arrest        67,991
-##        FT_Payroll PT_Employment    PT_Payroll    PT_Hours
-## 13 21,264,085,302     1,606,338 2,436,974,337 102,320,675
-## 14    875,526,173         8,771    19,844,264     922,919
-## 15    240,032,055         9,525    21,139,018     828,057
-## 16  1,029,983,732         8,796    22,533,420     721,345
-## 17    673,705,804         2,788     4,593,901     192,934
-## 18    500,811,462           569       851,651      30,404</code></pre>
+## 13    US                         Financial Administration       165,977
+## 14    US                  Other Government Administration        45,920
+## 15    US                               Judicial and Legal       172,687
+## 16    US                          Police Protection Total       104,512
+## 17    US Police Protection - Persons with Power of Arrest        67,991
+## 18    US                        Police Protection - Other        36,521
+##       FT_Payroll PT_Employment PT_Payroll PT_Hours
+## 13   875,526,173         8,771 19,844,264  922,919
+## 14   240,032,055         9,525 21,139,018  828,057
+## 15 1,029,983,732         8,796 22,533,420  721,345
+## 16   673,705,804         2,788  4,593,901  192,934
+## 17   500,811,462           569    851,651   30,404
+## 18   172,894,342         2,219  3,742,250  162,530</code></pre>
+<pre class="r"><code>names(d2018)</code></pre>
+<pre><code>## [1] &quot;State&quot;               &quot;Government_Function&quot; &quot;FT_Employment&quot;      
+## [4] &quot;FT_Payroll&quot;          &quot;PT_Employment&quot;       &quot;PT_Payroll&quot;         
+## [7] &quot;PT_Hours&quot;</code></pre>
 
 
 
