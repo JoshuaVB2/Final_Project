@@ -14,3 +14,10 @@ head(d2018)
 
 ```
 
+```{r}
+names(d2018)
+plot(d2018$`STATE GOVERNMENT: EMPLOYMENT AND PAYROLL DATA`, d2018$...4)
+# The names are the column names of what I want, but when I try to plot or do anything with them, it uses the top line of the csv, which I tried to delete in line 10.
+# I would like to do something like
+#plot(d2018$State~d2018$FT_Employment)
+```
