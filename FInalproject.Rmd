@@ -5,9 +5,8 @@ date: "5/4/2020"
 output: html_document
 ---
 ```{r}
-d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", header = FALSE)
-d2017 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv")
-d2018 <- subset(d2018[-c(1:12),])
+d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 11)
+#d2017 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv")
 names(d2018) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
 d2018 <- subset(d2018, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
 head(d2018)
@@ -16,8 +15,8 @@ head(d2018)
 
 ```{r}
 names(d2018)
-plot(d2018$`STATE GOVERNMENT: EMPLOYMENT AND PAYROLL DATA`, d2018$...4)
-# The names are the column names of what I want, but when I try to plot or do anything with them, it uses the top line of the csv, which I tried to delete in line 10.
+#plot(d2018$`STATE GOVERNMENT: EMPLOYMENT AND PAYROLL DATA`, d2018$...4)
+# The names are the column names of what I want, but when I try to plot or do anything with them, it uses the top line of the csv.
 # I would like to do something like
-#plot(d2018$State~d2018$FT_Employment)
+#plot(d2018$State~d2018$Government_Function)
 ```
