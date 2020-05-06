@@ -38,12 +38,14 @@ full <- rbind(d2018,d2016,d2014,d2013,d2012,d2010,d2008)
 full$Government_Function <- sub("Total - All Government Employment Functions","Total",full$Government_Function)
 full$State <- sub("United States","US",full$State)
 full$FT_Employment <- as.numeric(gsub(",","",full$FT_Employment))
+full$region <- with(full,ifelse(State %in% c("CA","AZ","AK","NM","HI","CO","WY","MT","ID","UT","NV","OR","WA"),"W",ifelse(State %in% c("TX","OK","AR","LS","MS","TN","AL","GA","FL","SC","NC","KY","WV","VA","MD","DE"),"S",ifelse(State %in% c("IA","MN","ND","SD","NE","KS","MO","WI","IL","IN","MI","OH"),"MW",ifelse(State %in% c("ME","NH","VT","MA","RI","CT","NY","PA","NJ"), "NE","US")))))
 total <- full[full$Government_Function == "Total",]
 totalus <- total[total$State=="US",]
+
 ```
 
 ```{r}
-#boxplot(total$FT_Employment~total$State)
+boxplot(total$FT_Employment~total$region)
 plot(totalus$year,totalus$FT_Employment)
 #boxplot(total18$FT_Employment~total18$State)
 
