@@ -6,36 +6,65 @@ output: html_document
 ---
 ```{r}
 d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 12, header = FALSE, stringsAsFactors = FALSE)
-#d2017 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv")
-names(d2018) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
-d2018 <- subset(d2018, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
-d2018$FT_Employment <- as.numeric(gsub(",","",d2018$FT_Employment))
-total18 <- d2018[d2018$Government_Function== "Total - All Government Employment Functions",]
+d2016 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2016_state.csv", skip = 12, header = FALSE, stringsAsFactors = FALSE)
+d2014 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2014_state.csv", skip = 12, header = FALSE, stringsAsFactors = FALSE)
+d2013 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2013_state.csv", skip = 14, header = FALSE, stringsAsFactors = FALSE)
+d2012 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2012_state.csv", skip = 15, header = FALSE, stringsAsFactors = FALSE)
+d2010 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/10stall.csv", skip = 14, header = FALSE, stringsAsFactors = FALSE)
+d2008 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/08stall.csv", skip = 13, header = FALSE, stringsAsFactors = FALSE)
 
+names(d2018) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
+names(d2016) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
+names(d2014) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
+names(d2013) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
+names(d2012) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
+names(d2010) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll", "Index")
+names(d2008) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll","Index")
+d2018 <- subset(d2018, select = -c(FT_equiv_Employment, March_Employment, March_Payroll))
+d2016 <- subset(d2016, select = -c(FT_equiv_Employment, March_Employment, March_Payroll))
+d2014 <- subset(d2014, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
+d2013 <- subset(d2013, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
+d2012 <- subset(d2012, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
+d2010 <- subset(d2010, select = -c(FT_equiv_Employment,March_Employment, March_Payroll, Index))
+d2008 <- subset(d2008, select = -c(FT_equiv_Employment,March_Employment, March_Payroll,Index))
+d2018$year <- 2018
+d2013$year <- 2013
+d2008$year <- 2008
+d2010$year <- 2010
+d2016$year <- 2016
+d2012$year <- 2012
+d2014$year <- 2014
+full <- rbind(d2018,d2016,d2014,d2013,d2012,d2010,d2008)
+full$Government_Function <- sub("Total - All Government Employment Functions","Total",full$Government_Function)
+full$State <- sub("United States","US",full$State)
+full$FT_Employment <- as.numeric(gsub(",","",full$FT_Employment))
+total <- full[full$Government_Function == "Total",]
+totalus <- total[total$State=="US",]
 ```
 
 ```{r}
-plot(total18$FT_Employment,total18$State)
-boxplot(total18$FT_Employment~total18$State)
+#boxplot(total$FT_Employment~total$State)
+plot(totalus$year,totalus$FT_Employment)
+#boxplot(total18$FT_Employment~total18$State)
 
-if (total18$State == c("CA","AZ","AK","NM","HI","CO","WY","MT","ID","UT","NV","OR","WA")){
-      total18$region <- "W"
-  } else if (total18$State == c("TX","OK","AR","LS","MS","TN","AL","GA","FL","SC","NC","KY","WV","VA","MD","DE")){
-      total18$region <- "S"
-  } else if (total18$State == c("IA","MN","ND","SD","NE","KS","MO","WI","IL","IN","MI","OH")){
-      total18$region <- "MW"
-  } else if (total18$State == c("ME","NH","VT","MA","RI","CT","NY","PA","NJ")){
-      total18$region <- "NE"
-  } else {
-      total18$region <- "US"
-  }
+#if (total18$State == c("CA","AZ","AK","NM","HI","CO","WY","MT","ID","UT","NV","OR","WA")){
+ #    total18$region <- "W"
+#  } else if (total18$State == c("TX","OK","AR","LS","MS","TN","AL","GA","FL","SC","NC","KY","WV","VA","MD","DE")){
+#      total18$region <- "S"
+#  } else if (total18$State == c("IA","MN","ND","SD","NE","KS","MO","WI","IL","IN","MI","OH")){
+#      total18$region <- "MW"
+ # } else if (total18$State == c("ME","NH","VT","MA","RI","CT","NY","PA","NJ")){
+#      total18$region <- "NE"
+#  } else {
+#      total18$region <- "US"
+  #}
 # any way to do this. It's not working, it makes all of them as US.
 
-if (total18$State == "CA"){
-  total18$region <- "W"
-} else {
-  total18$region <- "US"
-}
+#if (total18$State == "CA"){
+ # total18$region <- "W"
+#} else {
+ # total18$region <- "US"
+#}
 # Even this says CA is US instead of W
 
 
