@@ -5,20 +5,18 @@ date: "5/4/2020"
 output: html_document
 ---
 ```{r}
-d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 12, header = FALSE)
+d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 12, header = FALSE, stringsAsFactors = FALSE)
 #d2017 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv")
 names(d2018) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
 d2018 <- subset(d2018, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
-head(d2018)
+d2018$FT_Employment <- as.numeric(gsub(",","",d2018$FT_Employment))
 total18 <- d2018[d2018$Government_Function== "Total - All Government Employment Functions",]
 
 ```
 
 ```{r}
 plot(total18$FT_Employment,total18$State)
-hist(total18$FT_Payroll)
-hist(total18$FT_Employment)
-# says it's not numeric??? Not sure why because they are numbers
+boxplot(total18$FT_Employment~total18$State)
 
 if (total18$State == c("CA","AZ","AK","NM","HI","CO","WY","MT","ID","UT","NV","OR","WA")){
       total18$region <- "W"
