@@ -5,18 +5,40 @@ date: "5/4/2020"
 output: html_document
 ---
 ```{r}
-d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 11)
+d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 12, header = FALSE)
 #d2017 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2017_state_revised.csv")
 names(d2018) <- c("State","Government_Function","FT_Employment","FT_Payroll", "PT_Employment","PT_Payroll","PT_Hours","FT_equiv_Employment","March_Employment","March_Payroll")
 d2018 <- subset(d2018, select = -c(FT_equiv_Employment,March_Employment, March_Payroll))
 head(d2018)
+total18 <- d2018[d2018$Government_Function== "Total - All Government Employment Functions",]
 
 ```
 
 ```{r}
-names(d2018)
-#plot(d2018$`STATE GOVERNMENT: EMPLOYMENT AND PAYROLL DATA`, d2018$...4)
-# The names are the column names of what I want, but when I try to plot or do anything with them, it uses the top line of the csv.
-# I would like to do something like
-#plot(d2018$State~d2018$Government_Function)
+plot(total18$FT_Employment,total18$State)
+hist(total18$FT_Payroll)
+hist(total18$FT_Employment)
+# says it's not numeric??? Not sure why because they are numbers
+
+if (total18$State == c("CA","AZ","AK","NM","HI","CO","WY","MT","ID","UT","NV","OR","WA")){
+      total18$region <- "W"
+  } else if (total18$State == c("TX","OK","AR","LS","MS","TN","AL","GA","FL","SC","NC","KY","WV","VA","MD","DE")){
+      total18$region <- "S"
+  } else if (total18$State == c("IA","MN","ND","SD","NE","KS","MO","WI","IL","IN","MI","OH")){
+      total18$region <- "MW"
+  } else if (total18$State == c("ME","NH","VT","MA","RI","CT","NY","PA","NJ")){
+      total18$region <- "NE"
+  } else {
+      total18$region <- "US"
+  }
+# any way to do this. It's not working, it makes all of them as US.
+
+if (total18$State == "CA"){
+  total18$region <- "W"
+} else {
+  total18$region <- "US"
+}
+# Even this says CA is US instead of W
+
+
 ```
