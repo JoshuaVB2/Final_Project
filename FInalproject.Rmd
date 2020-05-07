@@ -38,6 +38,7 @@ full <- rbind(d2018,d2016,d2014,d2013,d2012,d2010,d2008)
 full$Government_Function <- sub("Total - All Government Employment Functions","Total",full$Government_Function)
 full$State <- sub("United States","US",full$State)
 full$FT_Employment <- as.numeric(gsub(",","",full$FT_Employment))
+full$PT_Employment <- as.numeric(gsub(",","",full$PT_Employment))
 full$region <- with(full,ifelse(State %in% c("CA","AZ","AK","NM","HI","CO","WY","MT","ID","UT","NV","OR","WA","California","Arizona","Alaska","New Mexico","Hawaii","Colorado","Wyoming","Montana","Idaho","Utah","Nevada","Oregon","Washington"),"W",ifelse(State %in% c("TX","OK","AR","LA","MS","TN","AL","GA","FL","SC","NC","KY","WV","VA","MD","DE", "Texas","Oklahoma","Arkansas","Louisiana","Mississippi","Tennessee","Alabama","Georgia","Florida","South Carolina","North Carolina","Kentucky","West Virginia","Virginia","Maryland","Delaware"),"S",ifelse(State %in% c("IA","MN","ND","SD","NE","KS","MO","WI","IL","IN","MI","OH","Iowa","Minnesota","North Dakota","South Dakota","Nebraska","Kansas","Missouri","Wisconsin","Illinois","Indiana","Michigan","Ohio"),"MW",ifelse(State %in% c("ME","NH","VT","MA","RI","CT","NY","PA","NJ", "Maine","New Hampshire","Vermont","Massachusetts","Rhode Island","Connecticut","New York","Pennsylvania","New Jersey"), "NE","US")))))
 total <- full[full$Government_Function == "Total",]
 finance <- full[full$Government_Function == "Financial Administration",]
@@ -62,6 +63,10 @@ mwtotal <- aggregate(FT_Employment~year,totalmw,mean)
 stotal <- aggregate(FT_Employment~year,totalS,mean)
 netotal <- aggregate(FT_Employment~year,totalne,mean)
 wtotal <- aggregate(FT_Employment~year,totalW,mean)
+mwtotalpt <- aggregate(PT_Employment~year,totalmw,mean)
+stotalpt <- aggregate(PT_Employment~year,totalS,mean)
+netotalpt <- aggregate(PT_Employment~year,totalne,mean)
+wtotalpt <- aggregate(PT_Employment~year,totalW,mean)
 ```
 
 ```{r}
@@ -79,4 +84,17 @@ plot(judicialus$year,judicialus$FT_Employment, type = "l", col = "darkgreen")
 plot(policeus$year,policeus$FT_Employment, type = "l", col = "darkblue")
 plot(highwayus$year,highwayus$FT_Employment, type = "l", col = "darkgrey")
 
+boxplot(totalreg$PT_Employment)
+boxplot(totalreg$PT_Employment~totalreg$region)
+plot(totalus$year,totalus$PT_Employment, type = "l", col = "blue")
+plot(mwtotalpt, type = "l", col ="red")
+plot(stotalpt, type = "l", col ="darkred")
+plot(netotalpt, type = "l", col ="darkblue")
+plot(wtotalpt, type = "l", col ="blue")
+plot(financeus$year,financeus$PT_Employment, type = "l", col = "red")
+plot(educationus$year,educationus$PT_Employment, type = "l", col = "orange")
+plot(hospitalus$year,hospitalus$PT_Employment, type = "l", col = "darkred")
+plot(judicialus$year,judicialus$PT_Employment, type = "l", col = "darkgreen")
+plot(policeus$year,policeus$PT_Employment, type = "l", col = "darkblue")
+plot(highwayus$year,highwayus$PT_Employment, type = "l", col = "darkgrey")
 ```
