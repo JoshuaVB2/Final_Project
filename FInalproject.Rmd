@@ -69,7 +69,9 @@ netotalpt <- aggregate(PT_Employment~year,totalne,mean)
 wtotalpt <- aggregate(PT_Employment~year,totalW,mean)
 ```
 
-
+```{r}
+knitr::opts_chunk$set(echo = FALSE)
+```
 # Project
 #### Joshua VandenBerg
 #### May 6, 2020
@@ -82,32 +84,57 @@ One part of this project that did not get looked at is more in-depths state rese
 
 All of the data is ASPEP datasets from the United States Census Bureau. Each year was its separte file. So, I just binded all the data while making a year column, so that I could compare each year. I also had to make a region variable. I separated the states into four regions as the U.S. Census Bureau separated the states. The 2008 and 2010 datasets needed a little more cleaning as there was a few formatting changes compared to those of more recent years.
 
-```{r}
-boxplot(totalreg$FT_Employment)
-boxplot(totalreg$FT_Employment~totalreg$region)
-plot(totalus$year,totalus$FT_Employment, type = "l", col = "blue")
-plot(mwtotal, type = "l", col ="red")
-plot(stotal, type = "l", col ="darkred")
-plot(netotal, type = "l", col ="darkblue")
-plot(wtotal, type = "l", col ="blue")
-plot(financeus$year,financeus$FT_Employment, type = "l", col = "red")
-plot(educationus$year,educationus$FT_Employment, type = "l", col = "orange")
-plot(hospitalus$year,hospitalus$FT_Employment, type = "l", col = "darkred")
-plot(judicialus$year,judicialus$FT_Employment, type = "l", col = "darkgreen")
-plot(policeus$year,policeus$FT_Employment, type = "l", col = "darkblue")
-plot(highwayus$year,highwayus$FT_Employment, type = "l", col = "darkgrey")
+## Exploration
 
-boxplot(totalreg$PT_Employment)
-boxplot(totalreg$PT_Employment~totalreg$region)
-plot(totalus$year,totalus$PT_Employment, type = "l", col = "blue")
-plot(mwtotalpt, type = "l", col ="red")
-plot(stotalpt, type = "l", col ="darkred")
-plot(netotalpt, type = "l", col ="darkblue")
-plot(wtotalpt, type = "l", col ="blue")
-plot(financeus$year,financeus$PT_Employment, type = "l", col = "red")
-plot(educationus$year,educationus$PT_Employment, type = "l", col = "orange")
-plot(hospitalus$year,hospitalus$PT_Employment, type = "l", col = "darkred")
-plot(judicialus$year,judicialus$PT_Employment, type = "l", col = "darkgreen")
-plot(policeus$year,policeus$PT_Employment, type = "l", col = "darkblue")
-plot(highwayus$year,highwayus$PT_Employment, type = "l", col = "darkgrey")
+These first two graphs are just looking at the total number of government employees over the 10 year range. It is split between full-time employees and part-time employees.
+
+```{r}
+par(mfrow=c(1,2))
+plot1 <- plot(totalus$year,totalus$FT_Employment, type = "l", col = "blue", main = "Number of Full-time Employees", xlab = "Year", ylab = "FT Employment")
+plot2 <- plot(totalus$year,totalus$PT_Employment, type = "l", col = "red",main = "Number of Part-time Employees", xlab = "Year",ylab = "PT Employment")
+```
+
+The number of government full-time employees looks as if it was affected around the recession as there were more than 8,000 full time employees in 2008 to that of 2012. By 2018, it was close to the 2008 totals. On the other hand, the number of part-time employees has continued to increase. The next boxplots are looking at the different regions and the number of part-time or full-time employees.
+```{r}
+par(mfrow=c(1,2))
+boxplot(totalreg$FT_Employment~totalreg$region, main = "Full-time Employees by Region", xlab = "Region", ylab = "FT Employment")
+boxplot(totalreg$PT_Employment~totalreg$region, main = "Part-time Employees by Region", ylab = "PT Employment", xlab = "Region")
+```
+
+The first thing I noticed is the outliers in the South and West regions coming from Texas and California respectively. Of the full-time employees, the boxplots are very similar to populations of states in these regions. The MidWest is all very similar. The NorthEast is very spread out, especially with the likes of New York. The South is farely similar besides Texas. The West is actually not as populated compared to other states in the US besides California. The part-time employee boxplot on the other hand looks much similar. The box or middle 50% is around the same size to that of the other regions.
+
+## Analysis
+```{r}
+par(mfrow=c(2,2))
+plot(mwtotal, type = "l", col ="red", main = "Midwest", ylab = "",las=1)
+plot(stotal, type = "l", col ="darkred", main = "South", ylab = "",las=1)
+plot(netotal, type = "l", col ="darkblue", main = "Northeast", ylab = "",las=1)
+plot(wtotal, type = "l", col ="blue", main = "West", ylab = "",las=1)
+```
+
+```{r}
+par(mfrow=c(3,2))
+plot(financeus$year,financeus$FT_Employment, type = "l", col = "red",ylab = "",las=1, xlab = "Year", main = "Finance")
+plot(educationus$year,educationus$FT_Employment, type = "l", col = "orange",ylab = "",las=1,xlab = "Year", main = "Education")
+plot(hospitalus$year,hospitalus$FT_Employment, type = "l", col = "darkred",ylab = "",las=1,xlab = "Year", main = "Hospital")
+plot(judicialus$year,judicialus$FT_Employment, type = "l", col = "darkgreen",ylab = "",las=1,xlab = "Year", main = "Judicial")
+plot(policeus$year,policeus$FT_Employment, type = "l", col = "darkblue",ylab = "",las=1,xlab = "Year", main="Police")
+plot(highwayus$year,highwayus$FT_Employment, type = "l", col = "darkgrey",ylab = "",las=1,xlab = "Year",main="Highway")
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(mwtotalpt, type = "l", col ="red",main = "Midwest", ylab = "",las=1)
+plot(stotalpt, type = "l", col ="darkred",main = "South", ylab = "",las=1)
+plot(netotalpt, type = "l", col ="darkblue",main = "Northeast", ylab = "",las=1)
+plot(wtotalpt, type = "l", col ="blue",main = "West", ylab = "",las=1)
+```
+```{r}
+par(mfrow=c(3,2))
+plot(financeus$year,financeus$PT_Employment, type = "l", col = "red",ylab = "",las=1, xlab = "Year", main = "Finance")
+plot(educationus$year,educationus$PT_Employment, type = "l", col = "orange",ylab = "",las=1, xlab = "Year", main = "Education")
+plot(hospitalus$year,hospitalus$PT_Employment, type = "l", col = "darkred",ylab = "",las=1, xlab = "Year", main = "Hospital")
+plot(judicialus$year,judicialus$PT_Employment, type = "l", col = "darkgreen",ylab = "",las=1, xlab = "Year", main = "Judicial")
+plot(policeus$year,policeus$PT_Employment, type = "l", col = "darkblue",ylab = "",las=1, xlab = "Year", main = "Police")
+plot(highwayus$year,highwayus$PT_Employment, type = "l", col = "darkgrey",ylab = "",las=1, xlab = "Year", main = "Highway")
 ```
