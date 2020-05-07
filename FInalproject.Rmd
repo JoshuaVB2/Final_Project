@@ -1,9 +1,13 @@
+```{r}
+knitr::opts_chunk$set(echo = FALSE)
+```
 ---
-title: "Final_project"
-author: "Josh VandenBerg"
-date: "5/4/2020"
+title: "Final Project"
+author: "Joshua VandenBerg"
+date: "5/6/2020"
 output: html_document
 ---
+
 ```{r}
 d2018 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2018_state.csv", skip = 12, header = FALSE, stringsAsFactors = FALSE)
 d2016 <- read.csv("/Users/joshuavandenberg/Documents/Data Manage/2016_state.csv", skip = 12, header = FALSE, stringsAsFactors = FALSE)
@@ -69,13 +73,6 @@ netotalpt <- aggregate(PT_Employment~year,totalne,mean)
 wtotalpt <- aggregate(PT_Employment~year,totalW,mean)
 ```
 
-```{r}
-knitr::opts_chunk$set(echo = FALSE)
-```
-# Project
-#### Joshua VandenBerg
-#### May 6, 2020
-
 ## Intro
 
 This project will be looking at the trend of government employees not only in different government functions but also in different regions of the Unites States. I will be looking at the years from 2008-2018. I did not chose every year instead I just used 2008, 2010, 2012, 2013, 2014, 2016, and 2018. Interstingly, the recession in 2012 is quite noticeable in all of the United States, but not in every government function. This project will also look into if there is a difference between full-time government employees compared to part-time.
@@ -104,6 +101,9 @@ boxplot(totalreg$PT_Employment~totalreg$region, main = "Part-time Employees by R
 The first thing I noticed is the outliers in the South and West regions coming from Texas and California respectively. Of the full-time employees, the boxplots are very similar to populations of states in these regions. The MidWest is all very similar. The NorthEast is very spread out, especially with the likes of New York. The South is farely similar besides Texas. The West is actually not as populated compared to other states in the US besides California. The part-time employee boxplot on the other hand looks much similar. The box or middle 50% is around the same size to that of the other regions.
 
 ## Analysis
+#### Full-time Employees
+First, we will look at the the full-time employment in the different regions by line graphs instead of box plots. This is easier to see the rise and fall over the years.
+
 ```{r}
 par(mfrow=c(2,2))
 plot(mwtotal, type = "l", col ="red", main = "Midwest", ylab = "",las=1)
@@ -112,6 +112,9 @@ plot(netotal, type = "l", col ="darkblue", main = "Northeast", ylab = "",las=1)
 plot(wtotal, type = "l", col ="blue", main = "West", ylab = "",las=1)
 ```
 
+Each region loses full-time jobs around 2012. The West has the sharpest increase compared to the other regions, while the South and Northeast have very minimal rebounds. The Midwest regions is very similar to the averyage between the two as seen in the full US graph above.
+
+Next, looking at some more common government functions, we notice that some jobs declined during the recession before rebounding, other increase each year, and others continue to decline.
 ```{r}
 par(mfrow=c(3,2))
 plot(financeus$year,financeus$FT_Employment, type = "l", col = "red",ylab = "",las=1, xlab = "Year", main = "Finance")
@@ -122,6 +125,11 @@ plot(policeus$year,policeus$FT_Employment, type = "l", col = "darkblue",ylab = "
 plot(highwayus$year,highwayus$FT_Employment, type = "l", col = "darkgrey",ylab = "",las=1,xlab = "Year",main="Highway")
 ```
 
+Looking the different jobs, hospital workers is very interesting. The number has decreased coming into 2012 and has not really rebounded. Finances, judicial, and police have all reacted similarily to the normal u or v shape. As education is important, it makes sense that it continues to increase. Highway workers, on the other hand, have continued to decrease, probably because machines have improved.
+
+#### Part-time Employees
+Next, looking at part-time employees, we can see that even separate they do not react like the full-time employee graphs did.
+
 ```{r}
 par(mfrow=c(2,2))
 plot(mwtotalpt, type = "l", col ="red",main = "Midwest", ylab = "",las=1)
@@ -129,6 +137,9 @@ plot(stotalpt, type = "l", col ="darkred",main = "South", ylab = "",las=1)
 plot(netotalpt, type = "l", col ="darkblue",main = "Northeast", ylab = "",las=1)
 plot(wtotalpt, type = "l", col ="blue",main = "West", ylab = "",las=1)
 ```
+
+Interstingly, the midwest garphs follows the same pattern as that of the total part-time employees in the same way the midwest full-time employees follow the pattern of the total full-time employees. The South is very similar to this pattern, while the West has steadily increased in part-time employees.
+
 ```{r}
 par(mfrow=c(3,2))
 plot(financeus$year,financeus$PT_Employment, type = "l", col = "red",ylab = "",las=1, xlab = "Year", main = "Finance")
@@ -138,3 +149,11 @@ plot(judicialus$year,judicialus$PT_Employment, type = "l", col = "darkgreen",yla
 plot(policeus$year,policeus$PT_Employment, type = "l", col = "darkblue",ylab = "",las=1, xlab = "Year", main = "Police")
 plot(highwayus$year,highwayus$PT_Employment, type = "l", col = "darkgrey",ylab = "",las=1, xlab = "Year", main = "Highway")
 ```
+
+The number of part-time employees is opposite to that of the number of full-time employees in some of the jobs. Hospital part-time employees along with highways are increasing while they are decreasing in full-time jobs. Education is still steadily increasing in part-time employees like it was in full-time employees.
+
+## Conclusion
+Looking at the number of government employees, we noticed a few things. First, almost every job and place hit a low point around 2012 or 2013 during the recession. Some of them have rebounded well and others have not. On the other hand, the number of education employees and the West part of the country was not affected in number of employees by the recession. The West states dropped a little in 2012, but otherwise have increased the nubmer of jobs tremendously. The number of employees in the education system have increased both full-time and part-time. Looking at the country as a whole though, the recession in 2012 eliiminated quite a a few jobs, but the number issteadily working its way back up.
+
+## Sources
+SOURCE: U.S. Census Bureau - 2016 Annual Survey of Public Employment & Payroll. https://www.census.gov/data/datasets.html   
