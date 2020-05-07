@@ -69,6 +69,19 @@ netotalpt <- aggregate(PT_Employment~year,totalne,mean)
 wtotalpt <- aggregate(PT_Employment~year,totalW,mean)
 ```
 
+
+# Project
+#### Joshua VandenBerg
+#### May 6, 2020
+
+## Intro
+
+This project will be looking at the trend of government employees not only in different government functions but also in different regions of the Unites States. I will be looking at the years from 2008-2018. I did not chose every year instead I just used 2008, 2010, 2012, 2013, 2014, 2016, and 2018. Interstingly, the recession in 2012 is quite noticeable in all of the United States, but not in every government function. This project will also look into if there is a difference between full-time government employees compared to part-time.
+
+One part of this project that did not get looked at is more in-depths state research. I focused more on regions of the United States, but it would be really interesting to see how different states reacted over time.
+
+All of the data is ASPEP datasets from the United States Census Bureau. Each year was its separte file. So, I just binded all the data while making a year column, so that I could compare each year. I also had to make a region variable. I separated the states into four regions as the U.S. Census Bureau separated the states. The 2008 and 2010 datasets needed a little more cleaning as there was a few formatting changes compared to those of more recent years.
+
 ```{r}
 boxplot(totalreg$FT_Employment)
 boxplot(totalreg$FT_Employment~totalreg$region)
